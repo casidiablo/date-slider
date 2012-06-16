@@ -65,7 +65,7 @@ public class AlternativeDateSlider extends DateSlider {
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mDayScroller.setLabeler(mDayLabeler, mTime.getTimeInMillis(), 45, 60);
+        mDayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 45, 60);
         mLayout.addView(mDayScroller, 2, lp);
         mScrollerList.add(mDayScroller);
 
@@ -73,46 +73,4 @@ public class AlternativeDateSlider extends DateSlider {
         // in the mScrollerList.
         setListeners();
     }
-
-    // the day labeler takes care of providing each TimeTextView element in the dayScroller
-    // with the right label and information about its time representation
-    private final Labeler mDayLabeler = new Labeler(this) {
-
-        @Override
-        public TimeObject add(long time, int val) {
-            Calendar c = Calendar.getInstance(mTimeZone);
-            c.setTimeInMillis(time);
-            c.add(Calendar.DAY_OF_MONTH, val);
-            return timeObjectFromCalendar(c);
-        }
-
-        /**
-         * creates an TimeObject from a CalendarInstance
-         */
-        @Override
-        protected TimeObject timeObjectFromCalendar(Calendar c) {
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            // set calendar to first millisecond of the day
-            c.set(year, month, day, 0, 0, 0);
-            c.set(Calendar.MILLISECOND, 0);
-            long startTime = c.getTimeInMillis();
-            // set calendar to last millisecond of the day
-            c.set(year, month, day, 23, 59, 59);
-            c.set(Calendar.MILLISECOND, 999);
-            long endTime = c.getTimeInMillis();
-            return new TimeObject(String.format("%td %ta", c, c), startTime, endTime);
-        }
-
-        /**
-         * rather than a standard TextView this is returning a LinearLayout with two TextViews
-         */
-        @Override
-        public TimeView createView(Context context, boolean isCenterView) {
-            return new TimeView.DayTimeLayoutView(context, isCenterView);
-        }
-
-    };
-
 }
