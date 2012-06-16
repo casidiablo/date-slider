@@ -85,7 +85,8 @@ public class ScrollLayout extends LinearLayout {
                 childrenWidth += mObjWidth;
             }
             TimeView ttv = labeler.createView(getContext(), false);
-            ttv.setVals(labeler.add(((TimeView) getChildAt(getChildCount() - 1)).getEndTime(), 1));
+            TimeView lastChild = (TimeView) getChildAt(getChildCount() - 1);
+            ttv.setVals(labeler.add(lastChild.getEndTime(), 1));
             addView((View) ttv, lp);
             ttv = labeler.createView(getContext(), false);
             ttv.setVals(labeler.add(((TimeView) getChildAt(0)).getEndTime(), -1));
