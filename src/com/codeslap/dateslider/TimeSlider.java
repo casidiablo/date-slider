@@ -46,13 +46,13 @@ public class TimeSlider extends DateSlider {
 
         // create the hour scroller and assign its labeler and add it to the layout
         ScrollLayout mHourScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mHourScroller.setLabeler(mHourLabeler, mTime.getTimeInMillis(), 90, 60);
+        mHourScroller.setLabeler(new HourLabeler(this), mTime.getTimeInMillis(), 90, 60);
         mLayout.addView(mHourScroller, 0, lp);
         mScrollerList.add(mHourScroller);
 
         // create the minute scroller and assign its labeler and add it to the layout
         ScrollLayout mMinuteScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mMinuteScroller.setLabeler(mMinuteLabeler, mTime.getTimeInMillis(), 45, 60);
+        mMinuteScroller.setLabeler(new MinuteLabeler(this), mTime.getTimeInMillis(), 45, 60);
         mLayout.addView(mMinuteScroller, 1, lp);
         mScrollerList.add(mMinuteScroller);
 
@@ -60,67 +60,6 @@ public class TimeSlider extends DateSlider {
         // in the mScrollerList.
         setListeners();
     }
-
-    // the labeler for the hour scroller
-    private final Labeler mHourLabeler = new Labeler(this) {
-
-        @Override
-        public TimeObject add(long time, int val) {
-            Calendar c = Calendar.getInstance(getTimeZone());
-            c.setTimeInMillis(time);
-            c.add(Calendar.HOUR_OF_DAY, val);
-            return timeObjectFromCalendar(c);
-        }
-
-        @Override
-        protected TimeObject timeObjectFromCalendar(Calendar c) {
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            // get the first millisecond of that hour
-            c.set(year, month, day, hour, 0, 0);
-            c.set(Calendar.MILLISECOND, 0);
-            long startTime = c.getTimeInMillis();
-            // get the last millisecond of that hour
-            c.set(year, month, day, hour, 59, 59);
-            c.set(Calendar.MILLISECOND, 999);
-            long endTime = c.getTimeInMillis();
-            return new TimeObject(String.valueOf(hour), startTime, endTime);
-        }
-
-    };
-
-    // the labeler for the minute scroller
-    private final Labeler mMinuteLabeler = new Labeler(this) {
-
-        @Override
-        public TimeObject add(long time, int val) {
-            Calendar c = Calendar.getInstance(getTimeZone());
-            c.setTimeInMillis(time);
-            c.add(Calendar.MINUTE, val);
-            return timeObjectFromCalendar(c);
-        }
-
-        @Override
-        protected TimeObject timeObjectFromCalendar(Calendar c) {
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            int hour = c.get(Calendar.HOUR_OF_DAY);
-            int minute = c.get(Calendar.MINUTE);
-            // get the first millisecond of that minute
-            c.set(year, month, day, hour, minute, 0);
-            c.set(Calendar.MILLISECOND, 0);
-            long startTime = c.getTimeInMillis();
-            // get the last millisecond of that minute
-            c.set(year, month, day, hour, minute, 59);
-            c.set(Calendar.MILLISECOND, 999);
-            long endTime = c.getTimeInMillis();
-            return new TimeObject(String.valueOf(minute), startTime, endTime);
-        }
-
-    };
 
     /**
      * define our own title of the dialog
