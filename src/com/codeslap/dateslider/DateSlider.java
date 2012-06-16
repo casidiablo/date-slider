@@ -92,6 +92,10 @@ public abstract class DateSlider extends Dialog {
         mTime.setTimeInMillis(calendar.getTimeInMillis());
     }
 
+    public TimeZone getTimeZone() {
+        return mTimeZone;
+    }
+
     private final android.view.View.OnClickListener mOkButtonClickListener = new android.view.View.OnClickListener() {
         public void onClick(View v) {
             if (mOnDateSetListener != null)
@@ -167,7 +171,13 @@ public abstract class DateSlider extends Dialog {
      * This class has the purpose of telling the corresponding scroller, which values make up
      * a single TimeTextView element.
      */
-    public abstract class Labeler {
+    public static abstract class Labeler {
+
+        private final DateSlider mDateSlider;
+
+        public Labeler(DateSlider dateSlider) {
+            mDateSlider = dateSlider;
+        }
 
         /**
          * gets called once, when the scroller gets initialised
@@ -176,7 +186,7 @@ public abstract class DateSlider extends Dialog {
          * @return the TimeObject representing "time"
          */
         public TimeObject getElem(long time) {
-            Calendar c = Calendar.getInstance(mTimeZone);
+            Calendar c = Calendar.getInstance(mDateSlider.mTimeZone);
             c.setTimeInMillis(time);
             return timeObjectFromCalendar(c);
         }
@@ -191,6 +201,10 @@ public abstract class DateSlider extends Dialog {
          */
         public TimeView createView(Context context, boolean isCenterView) {
             return new TimeView.TimeTextView(context, isCenterView, 25);
+        }
+
+        public DateSlider getDateSlider() {
+            return mDateSlider;
         }
 
         /**

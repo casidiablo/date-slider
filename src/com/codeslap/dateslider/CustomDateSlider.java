@@ -50,19 +50,19 @@ public class CustomDateSlider extends DateSlider {
 
         // create the year scroller and assign its labeler and add it to the layout
         ScrollLayout mYearScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mYearScroller.setLabeler(yearLabeler, mTime.getTimeInMillis(), 200, 60);
+        mYearScroller.setLabeler(new YearLabeler(this), mTime.getTimeInMillis(), 200, 60);
         mLayout.addView(mYearScroller, 0, lp);
         mScrollerList.add(mYearScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mWeekScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mWeekScroller.setLabeler(weekLabeler, mTime.getTimeInMillis(), 100, 40);
+        mWeekScroller.setLabeler(mWeekLabeler, mTime.getTimeInMillis(), 100, 40);
         mLayout.addView(mWeekScroller, 1, lp);
         mScrollerList.add(mWeekScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mDayScroller.setLabeler(dayLabeler, mTime.getTimeInMillis(), 150, 60);
+        mDayScroller.setLabeler(mDayLabeler, mTime.getTimeInMillis(), 150, 60);
         mLayout.addView(mDayScroller, 2, lp);
         mScrollerList.add(mDayScroller);
 
@@ -71,43 +71,9 @@ public class CustomDateSlider extends DateSlider {
         setListeners();
     }
 
-    // the year labeler  takes care of providing each TimeTextView element in the yearScroller
-    // with the right label and information about its time representation
-    private Labeler yearLabeler = new Labeler() {
-
-        /**
-         * add "val" year to the month object that contains "time" and returns the new TimeObject
-         */
-        @Override
-        public TimeObject add(long time, int val) {
-            Calendar c = Calendar.getInstance(mTimeZone);
-            c.setTimeInMillis(time);
-            c.add(Calendar.YEAR, val);
-            return timeObjectFromCalendar(c);
-        }
-
-        /**
-         * creates an TimeObject from a CalendarInstance
-         */
-        @Override
-        protected TimeObject timeObjectFromCalendar(Calendar c) {
-            int year = c.get(Calendar.YEAR);
-            // set calendar to first millisecond of the year
-            c.set(year, 0, 1, 0, 0, 0);
-            c.set(Calendar.MILLISECOND, 0);
-            long startTime = c.getTimeInMillis();
-            // set calendar to last millisecond of the year
-            c.set(year, 11, 31, 23, 59, 59);
-            c.set(Calendar.MILLISECOND, 999);
-            long endTime = c.getTimeInMillis();
-            return new TimeObject(String.valueOf(year), startTime, endTime);
-        }
-
-    };
-
     // the month labeler  takes care of providing each TimeTextView element in the monthScroller
     // with the right label and information about its time representation
-    private Labeler weekLabeler = new Labeler() {
+    private Labeler mWeekLabeler = new Labeler(this) {
 
         /**
          * add "val" months to the month object that contains "time" and returns the new TimeObject
@@ -157,7 +123,7 @@ public class CustomDateSlider extends DateSlider {
 
     // the day labeler takes care of providing each TimeTextView element in the dayScroller
     // with the right label and information about its time representation
-    private Labeler dayLabeler = new Labeler() {
+    private Labeler mDayLabeler = new Labeler(this) {
 
         /**
          * add "val" days to the month object that contains "time" and returns the new TimeObject

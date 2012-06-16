@@ -52,7 +52,7 @@ public class DefaultDateSlider extends DateSlider {
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mMonthScroller.setLabeler(mMonthLabeler, mTime.getTimeInMillis(), 90, 60);
+        mMonthScroller.setLabeler(new MonthLabeler(this, true), mTime.getTimeInMillis(), 90, 60);
         mLayout.addView(mMonthScroller, 0, lp);
         mScrollerList.add(mMonthScroller);
 
@@ -67,52 +67,10 @@ public class DefaultDateSlider extends DateSlider {
         setListeners();
     }
 
-    // the month labeler  takes care of providing each TimeTextView element in the monthScroller
-    // with the right label and information about its time representation
-    private final Labeler mMonthLabeler = new Labeler() {
-
-        /**
-         * add "val" months to the month object that contains "time" and returns the new TimeObject
-         */
-        @Override
-        public TimeObject add(long time, int val) {
-            Calendar c = Calendar.getInstance(mTimeZone);
-            c.setTimeInMillis(time);
-            c.add(Calendar.MONTH, val);
-            return timeObjectFromCalendar(c);
-        }
-
-        /**
-         * creates an TimeObject from a CalendarInstance
-         */
-        @Override
-        protected TimeObject timeObjectFromCalendar(Calendar c) {
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            // set calendar to first millisecond of the month
-            c.set(year, month, 1, 0, 0, 0);
-            c.set(Calendar.MILLISECOND, 0);
-            long startTime = c.getTimeInMillis();
-            // set calendar to last millisecond of the month
-            c.set(year, month, c.getActualMaximum(Calendar.DAY_OF_MONTH), 23, 59, 59);
-            c.set(Calendar.MILLISECOND, 999);
-            long endTime = c.getTimeInMillis();
-            return new TimeObject(String.format("%tb %tY", c, c), startTime, endTime);
-        }
-
-        /**
-         * rather than a standard TextView this is returning a LinearLayout with two TextViews
-         */
-        @Override
-        public TimeView createView(Context context, boolean isCenterView) {
-            return new TimeView.TimeLayoutView(context, isCenterView, 25, 8, 0.95f);
-        }
-    };
-
 
     // the day labeler takes care of providing each TimeTextView element in the dayScroller
     // with the right label and information about its time representation
-    private final Labeler mDayLabeler = new Labeler() {
+    private final Labeler mDayLabeler = new Labeler(this) {
 
         /**
          * add "val" days to the month object that contains "time" and returns the new TimeObject

@@ -62,7 +62,7 @@ public class TimeSlider extends DateSlider {
     }
 
     // the labeler for the hour scroller
-    private final Labeler mHourLabeler = new Labeler() {
+    private final Labeler mHourLabeler = new Labeler(this) {
 
         @Override
         public TimeObject add(long time, int val) {
@@ -92,7 +92,7 @@ public class TimeSlider extends DateSlider {
     };
 
     // the labeler for the minute scroller
-    private final Labeler mMinuteLabeler = new Labeler() {
+    private final Labeler mMinuteLabeler = new Labeler(this) {
 
         @Override
         public TimeObject add(long time, int val) {
