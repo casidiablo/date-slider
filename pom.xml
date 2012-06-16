@@ -2,11 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.codeslap</groupId>
     <artifactId>android-dateslider</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>apklib</packaging>
+    <name>Android DateSlider</name>
+    <description>Android Library with Date Time Dialog Pickers</description>
+    <url>https://github.com/casidiablo/date-slider/tree/develop</url>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <connection>scm:git:git@github.com:casidiablo/date-slider.git</connection>
+        <developerConnection>scm:git:git@github.com:casidiablo/date-slider.git</developerConnection>
+        <url>git@github.com:casidiablo/date-slider.git</url>
+    </scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <!-- required by Android Maven Plugin, also ensures other plugins are pretty new -->
+    <prerequisites>
+        <maven>3.0.3</maven>
+    </prerequisites>
 
     <dependencies>
         <dependency>
@@ -59,4 +89,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Nexus Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 </project>
