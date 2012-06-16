@@ -2,4 +2,6 @@
 <resources>
     <string name="dateSliderTitle">Selected date</string>
     <string name="app_name">DateSlider v1 Demo</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
 </resources>
