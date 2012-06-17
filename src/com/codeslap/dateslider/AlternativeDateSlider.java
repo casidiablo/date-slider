@@ -54,19 +54,19 @@ public class AlternativeDateSlider extends DateSlider {
         // create the year scroller and assign its labeler and add it to the layout
         ScrollLayout mYearScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mYearScroller.setLabeler(new YearLabeler(this), mTime.getTimeInMillis(), 180, 60);
-        mLayout.addView(mYearScroller, 0, lp);
+        addSlider(mYearScroller, 0, lp);
         mScrollerList.add(mYearScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mMonthScroller.setLabeler(new MonthLabeler(this, false), mTime.getTimeInMillis(), 150, 60);
-        mLayout.addView(mMonthScroller, 1, lp);
+        addSlider(mMonthScroller, 1, lp);
         mScrollerList.add(mMonthScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mDayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 45, 60);
-        mLayout.addView(mDayScroller, 2, lp);
+        addSlider(mDayScroller, 2, lp);
         mScrollerList.add(mDayScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers

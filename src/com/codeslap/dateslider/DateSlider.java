@@ -40,7 +40,9 @@ public abstract class DateSlider extends Dialog {
     private TimeZone mTimeZone;
     TextView mTitleText;
     final List<ScrollLayout> mScrollerList = new ArrayList<ScrollLayout>();
-    LinearLayout mLayout;
+    private LinearLayout mLayout;
+    private CharSequence mMessageContent;
+    private boolean mCancelButtonVisible = true;
 
     public DateSlider(Context context, OnDateSetListener l, Calendar calendar) {
         super(context);
@@ -63,20 +65,29 @@ public abstract class DateSlider extends Dialog {
             mTime.setTimeInMillis(time);
         }
 
-        this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.date_slider);
-        this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.dialog_title);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.dialog_title);
 
-        mTitleText = (TextView) this.findViewById(R.id.dateSliderTitleText);
+        mTitleText = (TextView) findViewById(R.id.date_slider_title_text);
         mLayout = (LinearLayout) findViewById(R.id.dateSliderMainLayout);
 
-        Button okButton = (Button) findViewById(R.id.dateSliderOkButton);
+        Button okButton = (Button) findViewById(R.id.date_slider_ok_button);
         okButton.setOnClickListener(mOkButtonClickListener);
 
-        Button cancelButton = (Button) findViewById(R.id.dateSliderCancelButton);
+        Button cancelButton = (Button) findViewById(R.id.date_slider_cancel_button);
         cancelButton.setOnClickListener(mCancelButtonClickListener);
 
         arrangeScroller(null);
+
+        if (mMessageContent == null) {
+            findViewById(R.id.message_container).setVisibility(View.GONE);
+        } else {
+            TextView message = (TextView) findViewById(R.id.message);
+            message.setText(mMessageContent);
+        }
+
+        findViewById(R.id.date_slider_cancel_button).setVisibility(mCancelButtonVisible ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -109,6 +120,28 @@ public abstract class DateSlider extends Dialog {
             dismiss();
         }
     };
+
+    /**
+     * Sets the message of this dialog
+     *
+     * @param title the message
+     */
+    public void setMessage(CharSequence title) {
+        mMessageContent = title;
+    }
+
+    /**
+     * Sets the message of this dialog
+     *
+     * @param title the message
+     */
+    public void setMessage(int title) {
+        mMessageContent = getContext().getString(title);
+    }
+
+    public void setCancelButtonVisible(boolean visible) {
+        mCancelButtonVisible = visible;
+    }
 
     /**
      * Sets the Scroll listeners for all ScrollLayouts in "mScrollerList"
@@ -149,7 +182,7 @@ public abstract class DateSlider extends Dialog {
      */
     void setTitle() {
         if (mTitleText != null) {
-            mTitleText.setText(getContext().getString(R.string.dateSliderTitle) +
+            mTitleText.setText(getContext().getString(R.string.date_slider_title) +
                     String.format(": %te. %tB %tY", mTime, mTime, mTime));
         }
     }
@@ -219,6 +252,11 @@ public abstract class DateSlider extends Dialog {
         public abstract TimeObject add(long time, int val);
 
         protected abstract TimeObject timeObjectFromCalendar(Calendar c);
+    }
+
+    protected void addSlider(ScrollLayout mMonthScroller, int index, LinearLayout.LayoutParams lp) {
+        LinearLayout container = (LinearLayout) mLayout.findViewById(R.id.sliders_container);
+        container.addView(mMonthScroller, index, lp);
     }
 
     /**

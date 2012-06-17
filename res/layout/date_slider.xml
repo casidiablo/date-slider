@@ -5,18 +5,38 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
+    <ScrollView
+            android:id="@+id/message_container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dip"
+            android:paddingBottom="12dip"
+            android:paddingLeft="14dip"
+            android:paddingRight="10dip">
+        <TextView
+                android:id="@+id/message"
+                style="?android:attr/textAppearanceMedium"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dip"/>
+    </ScrollView>
+    <LinearLayout
+            android:id="@+id/sliders_container"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
         <Button
-                android:id="@+id/dateSliderOkButton"
+                android:id="@+id/date_slider_ok_button"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="@string/set"/>
-        <Button android:id="@+id/dateSliderCancelButton"
+        <Button android:id="@+id/date_slider_cancel_button"
                 android:layout_width="0dp"
                 android:layout_height="fill_parent"
                 android:gravity="center"

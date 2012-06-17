@@ -48,19 +48,19 @@ public class CustomDateSlider extends DateSlider {
         // create the year scroller and assign its labeler and add it to the layout
         ScrollLayout mYearScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mYearScroller.setLabeler(new YearLabeler(this), mTime.getTimeInMillis(), 200, 60);
-        mLayout.addView(mYearScroller, 0, lp);
+        addSlider(mYearScroller, 0, lp);
         mScrollerList.add(mYearScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mWeekScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mWeekScroller.setLabeler(new WeekLabeler(this), mTime.getTimeInMillis(), 100, 40);
-        mLayout.addView(mWeekScroller, 1, lp);
+        addSlider(mWeekScroller, 1, lp);
         mScrollerList.add(mWeekScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mDayScroller.setLabeler(new DayLabeler(this, true), mTime.getTimeInMillis(), 150, 60);
-        mLayout.addView(mDayScroller, 2, lp);
+        addSlider(mDayScroller, 2, lp);
         mScrollerList.add(mDayScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers
@@ -74,7 +74,7 @@ public class CustomDateSlider extends DateSlider {
     @Override
     protected void setTitle() {
         if (mTitleText != null) {
-            mTitleText.setText(getContext().getString(R.string.dateSliderTitle) +
+            mTitleText.setText(getContext().getString(R.string.date_slider_title) +
                     String.format(": %tA, %te/%tm/%ty", mTime, mTime, mTime, mTime));
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dateSliderTitle">Selected date</string>
+    <string name="date_slider_title">Selected date</string>
     <string name="app_name">DateSlider v1 Demo</string>
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>

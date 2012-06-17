@@ -53,13 +53,13 @@ public class DefaultDateSlider extends DateSlider {
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mMonthScroller.setLabeler(new MonthLabeler(this, true), mTime.getTimeInMillis(), 90, 60);
-        mLayout.addView(mMonthScroller, 0, lp);
+        addSlider(mMonthScroller, 0, lp);
         mScrollerList.add(mMonthScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mDayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 45, 60);
-        mLayout.addView(mDayScroller, 1, lp);
+        addSlider(mDayScroller, 1, lp);
         mScrollerList.add(mDayScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers

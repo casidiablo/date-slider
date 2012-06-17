@@ -48,19 +48,19 @@ public class DateTimeSlider extends DateSlider {
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mMonthScroller.setLabeler(new MonthLabeler(this, true), mTime.getTimeInMillis(), 180, 60);
-        mLayout.addView(mMonthScroller, 0, lp);
+        addSlider(mMonthScroller, 0, lp);
         mScrollerList.add(mMonthScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mDayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 120, 60);
-        mLayout.addView(mDayScroller, 1, lp);
+        addSlider(mDayScroller, 1, lp);
         mScrollerList.add(mDayScroller);
 
         // create the minute scroller and assign its labeler and add it to the layout
         ScrollLayout mTimeScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mTimeScroller.setLabeler(new TimeLabeler(this), mTime.getTimeInMillis(), 80, 60);
-        mLayout.addView(mTimeScroller, 2, lp);
+        addSlider(mTimeScroller, 2, lp);
         mScrollerList.add(mTimeScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers
@@ -72,7 +72,7 @@ public class DateTimeSlider extends DateSlider {
     protected void setTitle() {
         if (mTitleText != null) {
             int minute = mTime.get(Calendar.MINUTE) / MINUTE_INTERVAL * MINUTE_INTERVAL;
-            mTitleText.setText(String.format("Selected DateTime: %te/%tm/%ty %tH:%02d",
+            mTitleText.setText(String.format("%te/%tm/%ty %tH:%02d",
                     mTime, mTime, mTime, mTime, minute));
         }
     }

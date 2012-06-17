@@ -46,13 +46,13 @@ public class MonthYearDateSlider extends DateSlider {
         // create the year scroller and assign its labeler and add it to the layout
         ScrollLayout mYearScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mYearScroller.setLabeler(new YearLabeler(this), mTime.getTimeInMillis(), 200, 60);
-        mLayout.addView(mYearScroller, 0, lp);
+        addSlider(mYearScroller, 0, lp);
         mScrollerList.add(mYearScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
         ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mMonthScroller.setLabeler(new MonthLabeler(this, false), mTime.getTimeInMillis(), 150, 60);
-        mLayout.addView(mMonthScroller, 1, lp);
+        addSlider(mMonthScroller, 1, lp);
         mScrollerList.add(mMonthScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers
@@ -66,7 +66,7 @@ public class MonthYearDateSlider extends DateSlider {
     @Override
     protected void setTitle() {
         if (mTitleText != null) {
-            mTitleText.setText(getContext().getString(R.string.dateSliderTitle) +
+            mTitleText.setText(getContext().getString(R.string.date_slider_title) +
                     String.format(": %tB %tY", mTime, mTime));
         }
     }

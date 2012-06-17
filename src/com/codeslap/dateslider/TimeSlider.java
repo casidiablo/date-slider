@@ -47,13 +47,13 @@ public class TimeSlider extends DateSlider {
         // create the hour scroller and assign its labeler and add it to the layout
         ScrollLayout mHourScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mHourScroller.setLabeler(new HourLabeler(this), mTime.getTimeInMillis(), 90, 60);
-        mLayout.addView(mHourScroller, 0, lp);
+        addSlider(mHourScroller, 0, lp);
         mScrollerList.add(mHourScroller);
 
         // create the minute scroller and assign its labeler and add it to the layout
         ScrollLayout mMinuteScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
         mMinuteScroller.setLabeler(new MinuteLabeler(this), mTime.getTimeInMillis(), 45, 60);
-        mLayout.addView(mMinuteScroller, 1, lp);
+        addSlider(mMinuteScroller, 1, lp);
         mScrollerList.add(mMinuteScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers
