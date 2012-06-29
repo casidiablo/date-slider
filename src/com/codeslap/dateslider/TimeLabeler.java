@@ -18,42 +18,37 @@ class TimeLabeler extends DateSlider.Labeler {
 
     @Override
     public DateSlider.TimeObject add(long time, int val) {
-        Calendar c = Calendar.getInstance(getDateSlider().getTimeZone());
-        c.setTimeInMillis(time);
-        c.add(Calendar.MINUTE, val * DateTimeSlider.MINUTE_INTERVAL);
-        return timeObjectFromCalendar(c);
+        Calendar calendar = Calendar.getInstance(getDateSlider().getTimeZone());
+        calendar.setTimeInMillis(time);
+        calendar.add(Calendar.MINUTE, val * DateTimeSlider.MINUTE_INTERVAL);
+        return timeObjectFromCalendar(calendar);
     }
 
-    /**
-     * override this method to set the initial TimeObject to a multiple of MINUTE_INTERVAL
-     */
     @Override
     public DateSlider.TimeObject getElem(long time) {
-        Calendar c = Calendar.getInstance(getDateSlider().getTimeZone());
-        c.setTimeInMillis(time);
-        c.set(Calendar.MINUTE, c.get(Calendar.MINUTE) / DateTimeSlider.MINUTE_INTERVAL * DateTimeSlider.MINUTE_INTERVAL);
-        Log.v("GETELEM", "getelem: " + c.get(Calendar.MINUTE));
-        return timeObjectFromCalendar(c);
+        Calendar calendar = Calendar.getInstance(getDateSlider().getTimeZone());
+        calendar.setTimeInMillis(time);
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) /
+                DateTimeSlider.MINUTE_INTERVAL * DateTimeSlider.MINUTE_INTERVAL);
+        Log.v("GETELEM", "getelem: " + calendar.get(Calendar.MINUTE));
+        return timeObjectFromCalendar(calendar);
     }
 
-    /**
-     * creates an TimeObject from a CalendarInstance
-     */
     @Override
-    protected DateSlider.TimeObject timeObjectFromCalendar(Calendar c) {
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE) / DateTimeSlider.MINUTE_INTERVAL * DateTimeSlider.MINUTE_INTERVAL;
+    protected DateSlider.TimeObject timeObjectFromCalendar(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE) / DateTimeSlider.MINUTE_INTERVAL * DateTimeSlider.MINUTE_INTERVAL;
         // get the last millisecond of that 15 minute block
-        c.set(year, month, day, hour, minute + DateTimeSlider.MINUTE_INTERVAL - 1, 59);
-        c.set(Calendar.MILLISECOND, 999);
-        long endTime = c.getTimeInMillis();
+        calendar.set(year, month, day, hour, minute + DateTimeSlider.MINUTE_INTERVAL - 1, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        long endTime = calendar.getTimeInMillis();
         // get the first millisecond of that 15 minute block
-        c.set(year, month, day, hour, minute, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        long startTime = c.getTimeInMillis();
-        return new DateSlider.TimeObject(String.format("%tR", c), startTime, endTime);
+        calendar.set(year, month, day, hour, minute, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        long startTime = calendar.getTimeInMillis();
+        return new DateSlider.TimeObject(String.format("%tR", calendar), startTime, endTime);
     }
 }

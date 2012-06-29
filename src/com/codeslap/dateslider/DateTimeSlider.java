@@ -46,22 +46,22 @@ public class DateTimeSlider extends DateSlider {
         LayoutParams lp = new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 
         // create the month scroller and assign its labeler and add it to the layout
-        ScrollLayout mMonthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mMonthScroller.setLabeler(new MonthLabeler(this, true), mTime.getTimeInMillis(), 180, 60);
-        addSlider(mMonthScroller, 0, lp);
-        mScrollerList.add(mMonthScroller);
+        ScrollLayout monthScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
+        monthScroller.setLabeler(new MonthLabeler(this, true), mTime.getTimeInMillis(), 180, 60);
+        addSlider(monthScroller, 0, lp);
+        mScrollerList.add(monthScroller);
 
         // create the month scroller and assign its labeler and add it to the layout
-        ScrollLayout mDayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mDayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 120, 60);
-        addSlider(mDayScroller, 1, lp);
-        mScrollerList.add(mDayScroller);
+        ScrollLayout dayScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
+        dayScroller.setLabeler(new DayLabeler(this), mTime.getTimeInMillis(), 120, 60);
+        addSlider(dayScroller, 1, lp);
+        mScrollerList.add(dayScroller);
 
         // create the minute scroller and assign its labeler and add it to the layout
-        ScrollLayout mTimeScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
-        mTimeScroller.setLabeler(new TimeLabeler(this), mTime.getTimeInMillis(), 80, 60);
-        addSlider(mTimeScroller, 2, lp);
-        mScrollerList.add(mTimeScroller);
+        ScrollLayout timeScroller = (ScrollLayout) inflater.inflate(R.layout.scroller, null);
+        timeScroller.setLabeler(new TimeLabeler(this), mTime.getTimeInMillis(), 80, 60);
+        addSlider(timeScroller, 2, lp);
+        mScrollerList.add(timeScroller);
 
         // this method _has_ to be called to set the onScrollListeners for all the Scrollers
         // in the mScrollerList.
@@ -75,5 +75,14 @@ public class DateTimeSlider extends DateSlider {
             mTitleText.setText(String.format("%te/%tm/%ty %tH:%02d",
                     mTime, mTime, mTime, mTime, minute));
         }
+    }
+
+    @Override
+    long getRoundedTime() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(mTime.getTimeInMillis());
+        int minute = mTime.get(Calendar.MINUTE) / MINUTE_INTERVAL * MINUTE_INTERVAL;
+        calendar.set(Calendar.MINUTE, minute);
+        return calendar.getTimeInMillis();
     }
 }

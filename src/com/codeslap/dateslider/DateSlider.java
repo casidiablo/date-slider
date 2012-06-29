@@ -36,7 +36,7 @@ import java.util.TimeZone;
 public abstract class DateSlider extends Dialog {
 
     private final OnDateSetListener mOnDateSetListener;
-    Calendar mTime;
+    protected Calendar mTime;
     private TimeZone mTimeZone;
     TextView mTitleText;
     final List<ScrollLayout> mScrollerList = new ArrayList<ScrollLayout>();
@@ -109,8 +109,11 @@ public abstract class DateSlider extends Dialog {
 
     private final android.view.View.OnClickListener mOkButtonClickListener = new android.view.View.OnClickListener() {
         public void onClick(View v) {
-            if (mOnDateSetListener != null)
-                mOnDateSetListener.onDateSet(DateSlider.this, mTime);
+            if (mOnDateSetListener != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(getRoundedTime());
+                mOnDateSetListener.onDateSet(DateSlider.this, calendar);
+            }
             dismiss();
         }
     };
@@ -187,6 +190,9 @@ public abstract class DateSlider extends Dialog {
         }
     }
 
+    long getRoundedTime() {
+        return mTime.getTimeInMillis();
+    }
 
     /**
      * Defines the interface which defines the methods of the OnDateSetListener
