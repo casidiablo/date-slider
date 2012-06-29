@@ -1,5 +1,6 @@
 package com.codeslap.dateslider;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -49,6 +50,12 @@ class TimeLabeler extends DateSlider.Labeler {
         calendar.set(year, month, day, hour, minute, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         long startTime = calendar.getTimeInMillis();
-        return new DateSlider.TimeObject(String.format("%tR", calendar), startTime, endTime);
+        String label = String.format("%tI:%tM %tp", calendar, calendar, calendar);
+        return new DateSlider.TimeObject(label, startTime, endTime);
+    }
+
+    @Override
+    public TimeView createView(Context context, boolean isCenterView) {
+        return new TimeView.TimeLayoutView(context, isCenterView, 25, 8, 0.95f);
     }
 }
