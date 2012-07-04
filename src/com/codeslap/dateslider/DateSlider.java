@@ -38,7 +38,7 @@ public abstract class DateSlider extends Dialog {
     private final OnDateSetListener mOnDateSetListener;
     protected Calendar mTime;
     private TimeZone mTimeZone;
-    TextView mTitleText;
+    protected TextView mTitleText;
     final List<ScrollLayout> mScrollerList = new ArrayList<ScrollLayout>();
     private LinearLayout mLayout;
     private CharSequence mMessageContent;
