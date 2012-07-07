@@ -55,6 +55,6 @@ class DayLabeler extends DateSlider.Labeler {
         if (mCustom) {
             return super.createView(context, isCenterView);
         }
-        return new TimeView.DayTimeLayoutView(context, isCenterView);
+        return new TimeView.DayTimeLayoutView(context, isCenterView, 30, 8, 0.8f);
     }
 }

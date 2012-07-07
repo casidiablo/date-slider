@@ -46,8 +46,7 @@ class WeekLabeler extends DateSlider.Labeler {
     }
 
     public TimeView createView(Context context, boolean isCenterView) {
-        float textSize = context.getResources().getDimension(R.dimen.default_text_size);
-        return new CustomTimeTextView(context, isCenterView, textSize);
+        return new CustomTimeTextView(context, isCenterView, 25);
     }
 
     /**

@@ -129,6 +129,7 @@ public interface TimeView {
         public TimeLayoutView(Context context, boolean isCenterView, float topTextSize, float bottomTextSize, float lineHeight) {
             super(context);
             setupView(context, isCenterView, topTextSize, bottomTextSize, lineHeight);
+            System.out.println("setupView(context, " + isCenterView + ", " + topTextSize + ", " + bottomTextSize + ", " + lineHeight + ");"+this);
         }
 
         /**
@@ -217,10 +218,9 @@ public interface TimeView {
          * @param context      used to create the view
          * @param isCenterView true if the element is the centered view in the ScrollLayout
          */
-        public DayTimeLayoutView(Context context, boolean isCenterView) {
-            super(context, isCenterView, context.getResources().getDimension(R.dimen.default_top_text_size),
-                    context.getResources().getDimension(R.dimen.default_bottom_text_size),
-                    context.getResources().getDimension(R.dimen.default_line_height));
+        public DayTimeLayoutView(Context context, boolean isCenterView, float topTextSize,
+                                 float bottomTextSize, float lineHeight) {
+            super(context, isCenterView, topTextSize, bottomTextSize, lineHeight);
         }
 
 
